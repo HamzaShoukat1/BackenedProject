@@ -12,6 +12,8 @@
   "scripts": {
     "dev": "node --watch index.js",
     "start": "node index.js"
-
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
   }
 }
