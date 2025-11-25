@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { DB_NAME } from "../constants.ts";
+import { DB_NAME } from "../constants.js";
 
 
 const connectDB = async ()=> {
@@ -12,6 +12,9 @@ const connectDB = async ()=> {
         
         
     }
+    console.log("MONGODB_URL:", process.env.MONGODB_URL);
+console.log("DB_NAME:", DB_NAME);
+
 }
 
 export default connectDB

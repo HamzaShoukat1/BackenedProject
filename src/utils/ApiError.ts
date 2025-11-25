@@ -18,9 +18,9 @@ class Apierror extends Error {
     this.errors = errors
     
     if(stack){
-      this.stack = stack
+      this.stack = stack //error trace
     } else{
-      Error.captureStackTrace(this,this.constructor) //error trace
+      Error.captureStackTrace(this,this.constructor) //if not trace then generate a clean,automatic, stack trace for this errro
     }
 
   }

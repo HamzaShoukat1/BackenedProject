@@ -1,11 +1,11 @@
-import connectDB from "./db/db.ts";
-import { app } from "./app.ts";
+import { app } from "./app.js";
+import connectDB from "./db/db.js";
 
 const startServer = async ():Promise<void> => {
   try {
     await connectDB();
 
-    const PORT:number = Number(process.env.PORT) || 8000;
+    const PORT:number = Number(process.env.PORT) || 8001;
     const server = app.listen(PORT, () => {
       console.log(`server is running on port,${PORT}`);
     });
