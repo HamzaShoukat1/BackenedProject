@@ -1,7 +1,7 @@
 import { Apierror } from "../utils/ApiError.js";
 import { asynchandler } from "../utils/asynchandler.js";
 import { User } from "../models/UserModel.js";
-import { uploadOnCloudinary } from "../utils/Cloudinary.js";
+import { uploadCloudinary } from "../utils/Cloudinary.js";
 import { Apiresponse } from "../utils/ApiResponse.js";
 import { type Multerfile } from "../Types/types.js";
 
@@ -39,8 +39,15 @@ const registerUser = asynchandler( async (req,res)=> {
 
     //local multer path
     const files = req.files as Multerfile
-    const avatarlocalpath = files?.avatar[0]?.path;
-    const coverImagelocalpath = files?.coverImage[0]?.path
+  
+const avatarlocalpath = files?.avatar?.[0]?.path;
+const coverImagelocalpath = files?.coverImage?.[0]?.path ?? null;
+
+    // let coverImagelocalpath;
+    // if (files &&  Array.isArray(files.coverImage) && files.coverImage.length > 0) {
+    //     coverImagelocalpath = files.coverImage[0]!.path
+        
+    // }
 
     if(!avatarlocalpath){
         throw new Apierror(400,"Avatar file is required")
@@ -50,8 +57,8 @@ const registerUser = asynchandler( async (req,res)=> {
 
 
 
-    const avatar = await uploadOnCloudinary(avatarlocalpath)
-    const coverImage = await uploadOnCloudinary(coverImagelocalpath || '')
+    const avatar = await uploadCloudinary(avatarlocalpath)
+    const coverImage =  coverImagelocalpath ? await uploadCloudinary(coverImagelocalpath) : null;
 
     if(!avatar){
                 throw new Apierror(400,"Avatar file is required")

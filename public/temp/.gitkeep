@@ -2,6 +2,10 @@
 
 //node --watch server.js
 
-npx tsc --init for installing tsconfig file
+//npx tsc --init for installing tsconfig file
+
+    // "dev": " tsc -w  & node --watch  --env-file=.env dist/index.js",
+
+//working   "dev": "nodemon --watch src --ext ts --exec ts-node dist/index.js",
 
 
