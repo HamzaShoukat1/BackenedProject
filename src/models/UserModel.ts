@@ -1,6 +1,6 @@
 //MongoDB stores user data, like all other data records, as BSON documents within collections.binary json mongo automaticaly add id when user save
 import mongoose ,{Schema} from "mongoose";
-import jwt from "jsonwebtoken" //jwt are bearer token 
+import jwt from "jsonwebtoken" 
 import bcrypt from "bcryptjs";
 
 

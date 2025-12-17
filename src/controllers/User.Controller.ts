@@ -29,7 +29,7 @@ const registerUser = asynchandler( async (req,res)=> {
     };
 
     //check existed User
-   const existUser = await   User.findOne({
+   const existUser = await User.findOne({
         $or: [{username},{email}]
     });
 

@@ -26,4 +26,4 @@ const startServer = async ():Promise<void> => {
     process.exit(1);
   }
 };
-startServer()
+startServer();
