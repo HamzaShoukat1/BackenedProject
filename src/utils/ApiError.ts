@@ -20,7 +20,7 @@ class Apierror extends Error {
     if(stack){
       this.stack = stack //error trace
     } else{
-      Error.captureStackTrace(this,this.constructor) //if not trace then generate a clean,automatic, stack trace for this errro
+      Error.captureStackTrace(this,this.constructor) //if not trace then generate a clean,automatic, stack trace for this errror
     }
 
   }

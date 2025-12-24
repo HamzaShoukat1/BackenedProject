@@ -18,6 +18,7 @@ const generateAcessandRefreshTokens = async (userId: string) => {
             await user.save({ validateBeforeSave: false })
 
         return { accessToken, refreshToken }
+        
 
 
     } catch (error) {
@@ -25,7 +26,7 @@ const generateAcessandRefreshTokens = async (userId: string) => {
 
 
     }
-}
+};
 
 
 const registerUser = asynchandler(async (req, res) => {
@@ -57,6 +58,7 @@ const registerUser = asynchandler(async (req, res) => {
 
     if (existUser) {
         throw new Apierror(400, "user with email or username already existed")
+
     };
     //local multer path
     const files = req.files as Multerfile
@@ -209,14 +211,16 @@ const logOutUser = asynchandler(async (req, res) => {
 
 
 });
+
 const refreshAccessTokens = asynchandler(async (req, res) => {
+    //acccess tokens
     const incomingRefreshTokenfromdb = req.cookies.refreshToken || req.body.refreshToken //body for mobile
 
     if (!incomingRefreshTokenfromdb) {
         throw new Apierror(401, "Unauthorized request")
 
     }
-    //now verify request 
+    //now verify tokens 
     try {
         const decodedToken = jwt.verify(
             incomingRefreshTokenfromdb,
@@ -234,11 +238,13 @@ const refreshAccessTokens = asynchandler(async (req, res) => {
 
 
         };
+
         const options = {
             httpOnly: true,
             secure: true
         }
 
+        //generate new tokens
         const { accessToken, newrefreshToken }: any = await generateAcessandRefreshTokens(user._id)
         return res.status(200)
             .cookie("accessToken", accessToken, options)
