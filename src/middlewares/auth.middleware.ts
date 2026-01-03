@@ -3,7 +3,7 @@ import { Apierror } from "../utils/ApiError.js";
 import { asynchandler } from "../utils/asynchandler.js";
 import jwt from "jsonwebtoken"
 import {type  AccessTokenPayload } from "../Types/types.js";
-//verify is user exist or not
+//verify is user exist or not or Check is the user logged in or not
 export const  verifyJWT = asynchandler(async(req,_res,next)=> {
  try {
    //get token
@@ -13,7 +13,7 @@ export const  verifyJWT = asynchandler(async(req,_res,next)=> {
    
        };
        //verify token
-     const decodingToken =   jwt.verify(token,process.env.ACCESS_TOKEN_SECRET!) as AccessTokenPayload
+     const decodingToken =   jwt.verify(token,process.env.ACCESS_TOKEN_SECRET || '') as AccessTokenPayload
    
      //extract user
     const user =  await User.findById(decodingToken?._id).select("-password -refreshToken") //this _id comes from db 

@@ -224,7 +224,7 @@ const refreshAccessTokens = asynchandler(async (req, res) => {
     try {
         const decodedToken = jwt.verify(
             incomingRefreshTokenfromdb,
-            process.env.REFRESH_TOKEN_SECRET!
+            process.env.REFRESH_TOKEN_SECRET || ''
         ) as AccessTokenPayload;
         //find user who have token
         const user = await User.findById(decodedToken?._id)
@@ -235,8 +235,6 @@ const refreshAccessTokens = asynchandler(async (req, res) => {
         };
         if (incomingRefreshTokenfromdb !== user?.refreshToken) {
             throw new Apierror(401, "Refresh tokken is expired or used")
-
-
         };
 
         const options = {
@@ -268,7 +266,7 @@ const refreshAccessTokens = asynchandler(async (req, res) => {
 
 
 
-})
+});
 
 const changeCurrentPassword = asynchandler(async(req,res)=> {
     const {oldPassword,newPassword} = req.body
@@ -281,10 +279,10 @@ const changeCurrentPassword = asynchandler(async(req,res)=> {
   };
   user.password = newPassword
 
-  await user.save({validateBeforeSave: false})
+  await user.save({validateBeforeSave: false}) //“I am updating only one trusted field. Do NOT re-validate the whole document.”
 
   return res.status(200).json(
-    new Apiresponse(200, {}, "password changed successfullt")
+    new Apiresponse(200, {}, "password changed successfully")
   )
 
 });
@@ -331,6 +329,8 @@ const updateUserAvatar = asynchandler(async(req,res)=> {
    if (!avatar?.url) {
     throw new Apierror(400,"Error while uploading avatar ")
    };
+   //after uploading delt previous avatar
+//    const deletePreviousAvatar 
 
  const user =  await User.findByIdAndUpdate(
      req.user?._id,
@@ -383,7 +383,7 @@ const updateUserCoverImage = asynchandler(async(req,res)=> {
 
 
 
-})
+});
 
 export {
     registerUser,
